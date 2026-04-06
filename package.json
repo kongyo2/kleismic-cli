@@ -32,6 +32,10 @@
 		"terminal",
 		"tui"
 	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/kongyo2/kleismic-cli"
+	},
 	"author": "",
 	"license": "MIT",
 	"engines": {
