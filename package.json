@@ -1,0 +1,57 @@
+{
+	"name": "@kongyo2/kleismic-cli",
+	"version": "0.1.0",
+	"description": "Interactive Kleismic CLI built with TypeScript, React, Ink, Zod, and Ink UI.",
+	"type": "module",
+	"bin": {
+		"kleismic": "./dist/cli.js"
+	},
+	"main": "./dist/cli.js",
+	"types": "./dist/cli.d.ts",
+	"files": [
+		"dist"
+	],
+	"scripts": {
+		"dev": "tsx src/cli.tsx --no-logo",
+		"build": "tsup src/cli.tsx --format esm --target node20 --dts --clean",
+		"lint": "oxlint --silent .",
+		"lint:strict": "oxlint --deny-warnings .",
+		"format": "prettier --write package.json README.md tsconfig.json .oxlintrc.json .prettierrc.json src",
+		"format:check": "prettier --check package.json README.md tsconfig.json .oxlintrc.json .prettierrc.json src",
+		"check:file": "oxlint",
+		"format:file": "prettier --check",
+		"check": "npm run typecheck && npm run format:check && npm run lint",
+		"typecheck": "tsc --noEmit",
+		"start": "node dist/cli.js --no-logo"
+	},
+	"keywords": [
+		"cli",
+		"ink",
+		"react",
+		"kleismic",
+		"terminal",
+		"tui"
+	],
+	"author": "",
+	"license": "MIT",
+	"engines": {
+		"node": ">=20"
+	},
+	"dependencies": {
+		"@inkjs/ui": "^2.0.0",
+		"ink": "^6.8.0",
+		"oh-my-logo": "^0.4.0",
+		"react": "^19.2.4",
+		"ws": "^8.20.0",
+		"zod": "^4.3.6"
+	},
+	"devDependencies": {
+		"@types/node": "^25.5.2",
+		"@types/react": "^19.2.14",
+		"oxlint": "^1.58.0",
+		"prettier": "^3.8.1",
+		"tsup": "^8.5.1",
+		"tsx": "^4.21.0",
+		"typescript": "^6.0.2"
+	}
+}
