@@ -533,14 +533,17 @@ export function parseSubcommand(argv: string[]): {
 
 	if (subcmd === 'react') {
 		const postId = Number(args[1]);
-		const text = args[2];
 		let size = 24;
 		let color: string = BRAND.primary;
 
 		const sizeIdx = args.indexOf('--size');
 
 		if (sizeIdx !== -1 && args[sizeIdx + 1]) {
-			size = Number(args[sizeIdx + 1]);
+			const parsed = Number(args[sizeIdx + 1]);
+
+			if (Number.isFinite(parsed) && parsed > 0) {
+				size = parsed;
+			}
 		}
 
 		const colorIdx = args.indexOf('--color');
@@ -548,6 +551,22 @@ export function parseSubcommand(argv: string[]): {
 		if (colorIdx !== -1 && args[colorIdx + 1]) {
 			color = args[colorIdx + 1];
 		}
+
+		const skipIndices = new Set<number>([0, 1]);
+
+		if (sizeIdx !== -1) {
+			skipIndices.add(sizeIdx);
+			skipIndices.add(sizeIdx + 1);
+		}
+
+		if (colorIdx !== -1) {
+			skipIndices.add(colorIdx);
+			skipIndices.add(colorIdx + 1);
+		}
+
+		const text = args.find(
+			(a, i) => !skipIndices.has(i) && !a.startsWith('--'),
+		);
 
 		if (!args[1] || !Number.isInteger(postId) || postId <= 0 || !text) {
 			return { command: null, json };
