@@ -82,10 +82,7 @@ if (flags.version) {
 const subcommandArgv = rawArgv.filter(
 	(arg) => !GLOBAL_FLAGS.has(arg) || arg === '--json',
 );
-const hasSubcommand =
-	subcommandArgv.length > 0 &&
-	subcommandArgv[0] !== undefined &&
-	!subcommandArgv[0].startsWith('-');
+const hasSubcommand = subcommandArgv.some((arg) => !arg.startsWith('-'));
 
 if (hasSubcommand) {
 	const { command, json } = parseSubcommand(subcommandArgv);

@@ -475,16 +475,23 @@ export function parseSubcommand(argv: string[]): {
 	}
 
 	if (subcmd === 'compose') {
-		const text = args
-			.filter((a) => !a.startsWith('--'))
-			.slice(1)
-			.join(' ');
 		let room = DEFAULT_ROOM;
 		const roomIdx = args.indexOf('--room');
 
 		if (roomIdx !== -1 && args[roomIdx + 1]) {
 			room = args[roomIdx + 1];
 		}
+
+		const skipIndices = new Set<number>([0]);
+
+		if (roomIdx !== -1) {
+			skipIndices.add(roomIdx);
+			skipIndices.add(roomIdx + 1);
+		}
+
+		const text = args
+			.filter((_, i) => !skipIndices.has(i) && !args[i].startsWith('--'))
+			.join(' ');
 
 		if (!text.trim()) {
 			return { command: null, json };
@@ -495,10 +502,7 @@ export function parseSubcommand(argv: string[]): {
 
 	if (subcmd === 'reply') {
 		const postId = Number(args[1]);
-		const text = args
-			.slice(2)
-			.filter((a) => !a.startsWith('--'))
-			.join(' ');
+		const text = args.slice(2).join(' ');
 
 		if (!args[1] || !Number.isInteger(postId) || postId <= 0 || !text.trim()) {
 			return { command: null, json };
