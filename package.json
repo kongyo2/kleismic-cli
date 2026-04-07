@@ -1,6 +1,6 @@
 {
 	"name": "@kongyo2/kleismic-cli",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"description": "Interactive Kleismic CLI built with TypeScript, React, Ink, Zod, and Ink UI.",
 	"type": "module",
 	"bin": {
